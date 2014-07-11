@@ -1,8 +1,8 @@
 .col-md-12
     alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)")
       {{alert.msg}}
-    select(ng-repeat="application in applicationList.node.nodes" ng-model="selectedApplication" ng-change="getTogglesForApplication()").form-control
-      option {{application.key}}
+    select(ng-options="app.key for app in AppsService.apps" ng-model="AppsService.selectedApp" ng-change="AppsService.selectedApp.loadToggles()").form-control
+
     //input(type="search" ng-model="search.name" placeholder="Type here to filter...").form-control.dashboard-search-box
     .panel.panel-default
         .panel-heading
@@ -14,6 +14,6 @@
                 th Name
                 th State
             trbody
-              tr(ng-repeat="toggle in featureToggles.node.nodes" ng-animate=" 'animate' ")
+              tr(ng-repeat="toggle in AppsService.selectedApp.toggles" ng-animate=" 'animate' ")
                 td {{toggle.key}}
                 td {{toggle.value}}

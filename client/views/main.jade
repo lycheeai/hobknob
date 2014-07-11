@@ -66,7 +66,7 @@ html(lang='en')
             h1 {{pageHeader}}
           .row
             div(ng-view='ng-view')
-    //Add Toggle Modal - should probably move to a partial 
+    //Add Toggle Modal - should probably move to a partial
     #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addModalLabel', aria-hidden='true')
       .modal-dialog
         .modal-content
@@ -89,6 +89,8 @@ html(lang='en')
     script(src='/js/common/dashboard.js')
     script(src='/js/controllers/dashboardController.js')
     script(src='/js/controllers/newFeatureToggleModalController.js')
+    script(src='/js/services/App.js')
+    script(src='/js/services/AppsService.js')
     script(src='/js/services/etcd-path-service.js')
     script(src='/js/services/etcd-service.js')
     script(src='/configuration/config.js')
