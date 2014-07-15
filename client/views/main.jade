@@ -8,6 +8,8 @@ html(lang='en')
     link(href='/css/toggleswitch.css', media='all', rel='stylesheet')
     link(href='/bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css', media='all', rel='stylesheet')
     script(src='/public/bower_components/jquery/dist/jquery.min.js')
+    script(type="text/javascript").
+      window.user = !{JSON.stringify(user, null,2)}
   body(ng-app='featureToggleFrontend')
     .container
       div(ng-controller="SideBarController").left.side-menu
@@ -17,14 +19,14 @@ html(lang='en')
         .body.rows.scroll-y.animated
           .profile
             .profile-image.pull-left
-              img.media-object.img-circle(src='/img/user-blue.jpeg', alt='avatar')
+              img.media-object.img-circle(ng-src='{{user.picture}}', alt='avatar')
               h4.media-heading
-                | Anonymous
+                | {{user.name}}
           #sidebar-menu
             ul.nav.nav-pills.nav-stacked
               li(ng-repeat="app in AppsService.apps" ng-click="console.log(app)" ng-model="AppsService.selectedApp")
                 a(ng-href="/#!/applications/{{app.appName}}" ng-class="{ active: isActive(app.appName) }") {{app.appName}}
-                
+
       .right.content-page
         .header.content.rows-content-header
           .navbar.navbar-default(role='navigation')
@@ -49,10 +51,10 @@ html(lang='en')
                     a(class="btn btn-default" ng-click="open()").btn.btn-success.new-toggle New Feature Toggle
         .body.content.rows.scroll-y
           .page-heading.animated
-            
+
           .row
             div(ng-view='ng-view')
-    //Add Toggle Modal - should probably move to a partial 
+    //Add Toggle Modal - should probably move to a partial
     #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addModalLabel', aria-hidden='true')
       .modal-dialog
         .modal-content
@@ -86,5 +88,5 @@ html(lang='en')
     script(src='/js/services/etcdService.js')
     script(src='/js/services/appsService.js')
     script(src='/configuration/config.js')
-    
+
 

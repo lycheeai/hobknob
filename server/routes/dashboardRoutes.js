@@ -1,10 +1,9 @@
 exports.dashboard = function(req, res){
-  res.render('main', 
-               {
-                 title: 'Dashboard', 
-                 pageHeader: 'Dashboard',
-                 user: req.session.user
-               });
+  res.render('main', {
+    title: 'Dashboard',
+    pageHeader: 'Dashboard',
+    user: req.user
+  });
 };
 
 exports.partials = function (req, res) {
