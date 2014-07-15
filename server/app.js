@@ -70,10 +70,22 @@ app.get('/auth/google/callback',
   });
 function ensureAuthenticated(req, res, next) {
   console.log(req.isAuthenticated())
-  if (req.isAuthenticated()) { return next(); }
+  if (req.isAuthenticated()) {
+    var email = req.user._json.email
+    if(email.indexOf("@opentable.com") > -1) {
+      return next();
+    }
+    else {
+      req.logout();
+      return res.redirect("/notopentableemployee")
+    }
+  }
   res.redirect('/auth/google');
 }
 app.get("/", ensureAuthenticated, dashboardroutes.dashboard);
+app.get("/notopentableemployee", function(req, res){
+  res.send("Sorry, you are not using opentable email account");
+});
 app.get('/partials/:name', dashboardroutes.partials);
 
 console.log("Starting up feature toggle dashboard on port " + app.get('port'));
