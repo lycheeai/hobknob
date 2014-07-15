@@ -13,7 +13,7 @@ featureToggleFrontend.controller('NewFeatureToggleModalController', ['$scope', '
   };
 }]);
 
-var ModalInstanceCtrl = ['$scope', '$modalInstance', 'etcdApiService', 'applicationName', function ($scope, $modalInstance, etcdApiService, applicationName) {
+var ModalInstanceCtrl = ['$scope', '$modalInstance', 'etcdApiService', 'applicationName', '$location', function ($scope, $modalInstance, etcdApiService, applicationName, $location) {
 
   $scope.alerts = [];
   $scope.form = {
@@ -29,10 +29,14 @@ var ModalInstanceCtrl = ['$scope', '$modalInstance', 'etcdApiService', 'applicat
     } else {
       etcdApiService
         .create($scope.form.applicationName, $scope.form.toggleName)
+        // .then(function(){
+        //   $scope.form.created = true;
+        //   $scope.alerts.push({type: "success", msg: "Successfully created feature toggle" });
+        //   $scope.$emit('toggle-added');
+        // },
         .then(function(){
-          $scope.form.created = true;
-          $scope.alerts.push({type: "success", msg: "Successfully created feature toggle" });
-          $scope.$emit('toggle-added');
+          $location.path("/applications/"+$scope.form.applicationName);
+          $scope.close();
         },
         function(){
           console.error("Error creating feature toggle", err); // todo: hook up angular logger
