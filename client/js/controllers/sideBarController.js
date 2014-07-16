@@ -1,7 +1,13 @@
-featureToggleFrontend.controller('SideBarController', function($scope, $http, etcdApiService, etcdPathService, AppsService, $timeout, $location) {
+featureToggleFrontend.controller('SideBarController', function($scope, $http, ApplicationService, $timeout, $location) {
 
-    $scope.AppsService = AppsService;
-    AppsService.loadApps();
+    //$scope.AppsService = ApplicationService;
+    
+    //$scope.Applications = ApplicationService.getApplications();
+
+    ApplicationService.getApplications().then(function(applications){
+    	$scope.Applications = applications;
+    })
+    
 
     $scope.isActive = function(appName) {
     	return ($location.path() === '/applications/' + appName);

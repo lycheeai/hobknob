@@ -22,7 +22,7 @@ html(lang='en')
                 | Anonymous
           #sidebar-menu
             ul.nav.nav-pills.nav-stacked
-              li(ng-repeat="app in AppsService.apps" ng-click="console.log(app)" ng-model="AppsService.selectedApp")
+              li(ng-repeat="app in Applications" ng-click="console.log(app)" ng-model="app")
                 a(ng-href="/#!/applications/{{app.appName}}" ng-class="{ active: isActive(app.appName) }") {{app.appName}}
                 
       .right.content-page
@@ -33,20 +33,20 @@ html(lang='en')
                 ul.nav.navbar-nav
                   li
                 .navbar-form.navbar-right
-                  div(ng-controller='NewFeatureToggleModalController')
-                    script(type='text/ng-template', id='createToggleContent.html')
-                      .modal-header
-                        h3.modal-title New Feature Toggle
-                        alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
-                        .modal-body.input-group
-                          input#application-name.form-control(type='text', ng-model='form.applicationName', placeHolder='Application Name', ng-readonly='form.created')
-                          span#toggle-name.input-group-addon /
-                          input.form-control(type='text', ng-model='form.toggleName', placeHolder='Feature Toggle Name', ng-readonly='form.created')
-                        .modal-footer
-                          button.btn.btn-primary(ng-click='close()', ng-show='form.created') Close
-                          button.btn.btn-primary(ng-click='ok()', ng-show='!form.created').create-toggle-btn Create
-                          button.btn.btn-warning(ng-click='cancel()', ng-show='!form.created') Cancel
-                    a(class="btn btn-default" ng-click="open()").btn.btn-success.new-toggle New Feature Toggle
+                  //- div(ng-controller='NewFeatureToggleModalController')
+                  //-   script(type='text/ng-template', id='createToggleContent.html')
+                  //-     .modal-header
+                  //-       h3.modal-title New Feature Toggle
+                  //-       alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
+                  //-       .modal-body.input-group
+                  //-         input#application-name.form-control(type='text', ng-model='form.applicationName', placeHolder='Application Name', ng-readonly='form.created')
+                  //-         span#toggle-name.input-group-addon /
+                  //-         input.form-control(type='text', ng-model='form.toggleName', placeHolder='Feature Toggle Name', ng-readonly='form.created')
+                  //-       .modal-footer
+                  //-         button.btn.btn-primary(ng-click='close()', ng-show='form.created') Close
+                  //-         button.btn.btn-primary(ng-click='ok()', ng-show='!form.created').create-toggle-btn Create
+                  //-         button.btn.btn-warning(ng-click='cancel()', ng-show='!form.created') Cancel
+                  //-   a(class="btn btn-default" ng-click="open()").btn.btn-success.new-toggle New Feature Toggle
         .body.content.rows.scroll-y
           .page-heading.animated
             
@@ -71,6 +71,8 @@ html(lang='en')
     script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
     script(src='/bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js')
     script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/bower_components/underscore/underscore.js')
+    script(src='/bower_components/angular-underscore-module/angular-underscore-module.js')
     script(src='/js/app.js')
     script(src='/js/common/lib/jquery.toggleswitch.min.js')
     script(src='/js/common/dashboard.js')
@@ -85,6 +87,7 @@ html(lang='en')
     script(src='/js/services/etcdAuditService.js')
     script(src='/js/services/etcdService.js')
     script(src='/js/services/appsService.js')
+    script(src='/js/services/toggleService.js')
     script(src='/configuration/config.js')
     
 

@@ -2,55 +2,87 @@
 
 angular.module('featureToggleFrontend')
 
-.factory('AppsService', function(ENV, $http, etcdApiService, App, Toggle) {
+.factory('ApplicationService', function(ENV, $http, etcdApiService, App, Toggle, ToggleService) {
 
-  function AppsService(){
-    this.apps = [];
-    this.selectedApp = null;
-  }
+  var ApplicationService = function() {}
 
-  AppsService.prototype = {
+  ApplicationService.prototype = {
+    getApplications: function(){
+        return etcdApiService
+          .getApplications()
+            .then(function(applicationData){
+              return _.map(applicationData.data.node.nodes, App.create);
+            });
+      },
 
-    loadApps:function(){
-      return etcdApiService.getApplications()
-        .success(this.setApps.bind(this));
-    },
+      getApplication: function(applicationName){
+        return etcdApiService
+          .getApplication(applicationName)
+          .then(function(applicationData){
+            var app = App.create(applicationData.data.node);
+            return ToggleService.hydrateToggles(app);
+          });
+      }
 
-    loadApp:function(appName){
-      return etcdApiService.getApplication(appName)
-        .success(this.setSelectedApp.bind(this));
-    },
+      // getApplication: function(applicationName){
+      //   return etcdApiService
+      //     .getApplication(applicationName)
+      //     .then(function(applicationData){
+      //       return App.create(applicationData.data.node);
+      //     });
+      // }
+    };
 
-    setSelectedApp: function(response) {
-      var app = App.create(response.node);
-      this.selectedApp = app;
-      this.selectedApp.loadToggles();
-    },
+    return new ApplicationService;
 
-    setApps:function(response){
-      this.apps = response.node.nodes.map(App.create);
-      this.selectedApp = this.apps[0];
-      this.selectedApp.loadToggles();
-    },
 
-    loadToggle:function(appName, toggleName){
-      return etcdApiService.getToggle(appName, toggleName)
-        .success(this.setSelectedToggle.bind(this));
-    },
+  // function AppsService(){
+  //   this.apps = [];
+  //   this.selectedApp = null;
+  // }
 
-    setSelectedToggle: function(response) {
-      var toggle = Toggle.create(response.node);
-      this.selectedToggle = toggle;
-      this.selectedToggle.loadAudit();
-    },
+  // AppsService.prototype = {
 
-    updateToggle: function(toggle) {
-      return etcdApiService.updateToggle(toggle);
-    }
+  //   loadApps:function(){
+  //     return etcdApiService.getApplications()
+  //       .success(this.setApps.bind(this));
+  //   },
 
-  };
+  //   loadApp:function(appName){
+  //     return etcdApiService.getApplication(appName)
+  //       .success(this.setSelectedApp.bind(this));
+  //   },
 
-  return new AppsService();
+  //   setSelectedApp: function(response) {
+  //     var app = App.create(response.node);
+  //     this.selectedApp = app;
+  //     this.selectedApp.loadToggles();
+  //   },
+
+  //   setApps:function(response){
+  //     this.apps = response.node.nodes.map(App.create);
+  //     this.selectedApp = this.apps[0];
+  //     this.selectedApp.loadToggles();
+  //   },
+
+  //   loadToggle:function(appName, toggleName){
+  //     return etcdApiService.getToggle(appName, toggleName)
+  //       .success(this.setSelectedToggle.bind(this));
+  //   },
+
+  //   setSelectedToggle: function(response) {
+  //     var toggle = Toggle.create(response.node);
+  //     this.selectedToggle = toggle;
+  //     this.selectedToggle.loadAudit();
+  //   },
+
+  //   updateToggle: function(toggle) {
+  //     return etcdApiService.updateToggle(toggle);
+  //   }
+
+  // };
+
+  // return new AppsService();
 
 
 });

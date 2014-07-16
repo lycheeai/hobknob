@@ -1,11 +1,14 @@
-featureToggleFrontend.controller('ApplicationController', function($scope, $http, etcdApiService, etcdPathService, AppsService, $timeout, $routeParams) {
+featureToggleFrontend.controller('ApplicationController', function($scope, $http, etcdApiService, etcdPathService, ApplicationService, $timeout, $routeParams) {
 
-    $scope.AppsService = AppsService;
-    AppsService.loadApp($routeParams.appName);
+
+    ApplicationService.getApplication($routeParams.appName).then(function(app){
+    	console.log(app);
+    	$scope.Application = app;	
+    })
 
     $scope.updateThisToggle = function(toggle) {
       $timeout(function(){
-        AppsService.updateToggle(toggle);
+        ApplicationService.updateToggle(toggle);
       });
     }
 });

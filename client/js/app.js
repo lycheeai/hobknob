@@ -1,6 +1,6 @@
 'use strict';
 
-var featureToggleFrontend = angular.module('featureToggleFrontend', ['ngResource', 'ngRoute', 'ui.bootstrap', 'config', 'toggle-switch']);
+var featureToggleFrontend = angular.module('featureToggleFrontend', ['ngResource', 'ngRoute', 'ui.bootstrap', 'config', 'toggle-switch', 'underscore']);
 
 featureToggleFrontend.config(function($routeProvider, $locationProvider, $httpProvider) {
 	$locationProvider.hashPrefix('!');

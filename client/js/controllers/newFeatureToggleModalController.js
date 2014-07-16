@@ -1,4 +1,4 @@
-featureToggleFrontend.controller('NewFeatureToggleModalController', ['$scope', '$modal', 'AppsService', function($scope, $modal, AppsService) {
+featureToggleFrontend.controller('NewFeatureToggleModalController', ['$scope', '$modal', 'AppsService', function($scope, $modal, ApplicationService) {
 
   $scope.open = function () {
     $modal.open({
@@ -6,7 +6,7 @@ featureToggleFrontend.controller('NewFeatureToggleModalController', ['$scope', '
       controller: ModalInstanceCtrl,
       resolve: {
         applicationName: function () {
-          return AppsService.appName;
+          return ApplicationService.appName;
         }
       }
     });
