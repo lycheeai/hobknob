@@ -9,8 +9,8 @@ angular.module('featureToggleFrontend')
   ToggleService.prototype = {
     hydrateToggles: function(app) {
       return etcdApiService.getToggles(app.key)
-        .success(function(){
-          app.setToggles.bind(this)
+        .then(function(response){
+          app.setToggles(response.data);
           return app;
         });
     }

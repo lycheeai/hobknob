@@ -2,7 +2,7 @@
 
 angular.module('featureToggleFrontend')
 
-.factory('App', function(etcdPathService) {
+.factory('App', function(etcdPathService, Toggle) {
 
   function App(data){
     angular.extend(this, data);
